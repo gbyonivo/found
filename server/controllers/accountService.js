@@ -8,6 +8,11 @@ const createAccount = async (account) => {
   return Account.create(value);
 };
 
+const getAccountByEmailAndPassword = async ({ email, password }) => {
+  const account = await Account.findOne({ where: { email, password } });
+  return account;
+};
+
 const getAccount = async (accountId) => Account
   .findOne({ where: { id: accountId }, attributes: accountAttributes });
 
@@ -22,4 +27,5 @@ export {
   getAccounts,
   getAccount,
   deleteAccount,
+  getAccountByEmailAndPassword,
 };

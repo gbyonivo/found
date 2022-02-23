@@ -1,12 +1,11 @@
 import { Router } from 'express';
 import { getReportClaims } from '../controllers/claimService.js';
+import { authenticateToken } from '../controllers/login.js';
 import { createReport, getReport, getReports } from '../controllers/report.js';
 
 const router = Router();
 
-router.use((req, res, next) => {
-  next();
-});
+router.use(authenticateToken);
 
 router.get('/:id', getReport);
 
