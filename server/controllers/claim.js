@@ -1,9 +1,9 @@
 import { requestAsyncWrapper } from '../helpers/common.js';
 import * as claimService from './claimService.js';
 
-const createClaim = async ({ body }, res) => {
+const createClaim = async ({ body, signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
-    const claim = await claimService.createClaim(body);
+    const claim = await claimService.createClaim({ ...body, accountId: signedInAccount.id });
     res.status(201).send(claim);
   }, res);
 };

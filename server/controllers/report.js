@@ -1,9 +1,9 @@
 import { requestAsyncWrapper } from '../helpers/common.js';
 import * as reportService from './reportService.js';
 
-const createReport = async ({ body }, res) => {
+const createReport = async ({ body, signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
-    const report = await reportService.createReport(body);
+    const report = await reportService.createReport({ ...body, accountId: signedInAccount.id });
     res.status(201).send(report);
   }, res);
 };

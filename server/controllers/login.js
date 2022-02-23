@@ -4,7 +4,7 @@ import { getAccountByEmailAndPassword } from './accountService.js';
 const login = async ({ body: { email, password } }, res) => {
   const account = await getAccountByEmailAndPassword({ email, password });
   if (account) {
-    const token = jwt.sign({ email, password }, process.env.SECRET);
+    const token = jwt.sign({ email, password, id: account.id }, process.env.SECRET);
     res.send(token);
   } else {
     res.status(401).send();
@@ -25,12 +25,11 @@ const authenticateToken = (req, res, next) => {
   }
 
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
-    console.log(err);
     if (err) {
       res.sendStatus(403);
       return;
     }
-    req.user = decoded;
+    req.signedInAccount = decoded;
     next();
   });
 };
