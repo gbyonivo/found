@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createAccount } from '../controllers/account.js';
+import { createAccount, getAccount, getAccounts } from '../controllers/account.js';
 
 const router = Router();
 
@@ -7,18 +7,18 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/:id', (req, res) => {
-  res.send('hey kuma');
-});
+router.get('/:id', getAccount);
 
-router.put('/:id', (req, res) => {
-  res.send('update user');
-});
+router.get('/', getAccounts);
 
 router.post('/', createAccount);
 
-router.delete('/', (req, res) => {
+router.delete('/my-account', (req, res) => {
   res.send('delete my account');
+});
+
+router.put('/my-account', (req, res) => {
+  res.send('update user');
 });
 
 export default router;

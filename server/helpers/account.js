@@ -9,7 +9,7 @@ const accountSchema = Joi.object({
 });
 
 const accountAttributes = [
-  'email', 'phone', 'lastName', 'firstName',
+  'email', 'phone', 'lastName', 'firstName', 'id',
 ];
 
 export {

@@ -1,31 +1,20 @@
 import { Router } from 'express';
+import { getReportClaims } from '../controllers/claimService.js';
+import { createReport, getReport, getReports } from '../controllers/report.js';
 
 const router = Router();
 
 router.use((req, res, next) => {
-  console.log('Time: ', Date.now());
   next();
 });
 
-router.get('/:id', (req, res) => {
-  res.send('return report');
-});
+router.get('/:id', getReport);
 
-router.get('/', (req, res) => {
-  res.send('return all reports');
-});
+router.get('/', getReports);
 
-router.post('/', (req, res) => {
-  res.send('create report');
-});
-
-router.delete('/:id', (req, res) => {
-  res.send('delete report');
-});
+router.post('/', createReport);
 
 // claims
-router.get('/:id/claims', (req, res) => {
-  res.send('return claims');
-});
+router.get('/:id/claims', getReportClaims);
 
 export default router;

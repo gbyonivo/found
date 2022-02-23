@@ -15,7 +15,7 @@ const getAccounts = async () => Account
   .findAll({ attributes: accountAttributes });
 
 const deleteAccount = async (accountId) => Account
-  .destroy({ where: { id: accountId }, attributes: accountAttributes });
+  .destroy({ where: { id: accountId } });
 
 export {
   createAccount,

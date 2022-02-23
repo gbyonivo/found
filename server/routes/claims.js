@@ -1,18 +1,14 @@
 import { Router } from 'express';
+import { createClaim, getClaim } from '../controllers/claim.js';
 
 const router = Router();
 
 router.use((req, res, next) => {
-  console.log('Time: ', Date.now());
   next();
 });
 
-router.post('/:id', (req, res) => {
-  res.send('create claim');
-});
+router.post('/', createClaim);
 
-router.put('/:id', (req, res) => {
-  res.send('update claim');
-});
+router.get('/:id', getClaim);
 
 export default router;
