@@ -3,9 +3,9 @@ import { claim } from '../models/claim.js';
 import { report } from '../models/report.js';
 import { account } from '../models/account.js';
 
-const connection = new Sequelize('found', 'root', 'password', {
-  host: '',
-  port: '',
+const connection = new Sequelize('found', 'root', '', {
+  host: 'localhost',
+  port: '3306',
   dialect: 'mysql'
 });
 
@@ -19,6 +19,7 @@ Report.hasOne(Claim, { as: 'AcceptedClaim', foreignKey: 'claimId' });
 Report.hasMany(Claim, { as: 'Claims', foreignKey: 'reportId' });
 
 export {
+  connection,
   Account,
   Report,
   Claim

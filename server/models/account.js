@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 const account = {
   id: {
     type: DataTypes.INTEGER,
-    primary: true,
+    primaryKey: true,
     autoIncrement: true
   },
   email: {

@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 const report = {
   id: {
     type: DataTypes.INTEGER,
-    primary: true,
+    primaryKey: true,
     autoIncrement: true
   },
   itemName: {
