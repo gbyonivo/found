@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { createAccount } from '../controllers/account.js';
 
 const router = Router();
 
@@ -15,9 +16,7 @@ router.put('/:id', (req, res) => {
   res.send('update user');
 });
 
-router.post('/', (req, res) => {
-  res.send('create user');
-});
+router.post('/', createAccount);
 
 router.delete('/', (req, res) => {
   res.send('delete my account');

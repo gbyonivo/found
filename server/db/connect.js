@@ -6,7 +6,7 @@ import { account } from '../models/account.js';
 const connection = new Sequelize('found', 'root', '', {
   host: 'localhost',
   port: '3306',
-  dialect: 'mysql'
+  dialect: 'mysql',
 });
 
 const Claim = connection.define('claim', claim);
@@ -22,5 +22,5 @@ export {
   connection,
   Account,
   Report,
-  Claim
+  Claim,
 };

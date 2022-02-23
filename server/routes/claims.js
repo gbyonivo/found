@@ -3,8 +3,8 @@ import { Router } from 'express';
 const router = Router();
 
 router.use((req, res, next) => {
-  console.log('Time: ', Date.now())
-  next()
+  console.log('Time: ', Date.now());
+  next();
 });
 
 router.post('/:id', (req, res) => {

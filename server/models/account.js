@@ -4,7 +4,7 @@ const account = {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   email: {
     type: DataTypes.STRING,
@@ -25,5 +25,5 @@ const account = {
 };
 
 export {
-  account
+  account,
 };
