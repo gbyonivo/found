@@ -8,6 +8,11 @@ const accountSchema = Joi.object({
   password: Joi.string().required().alphanum(),
 });
 
+const accountAttributes = [
+  'email', 'phone', 'lastName', 'firstName',
+];
+
 export {
   accountSchema,
+  accountAttributes,
 };

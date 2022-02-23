@@ -1,9 +1,8 @@
 import * as accountService from './accountService.js';
 
-const createAccount = async ({ body }, res) => {
+const requestAsyncWrapper = async (func, res) => {
   try {
-    const account = await accountService.createAccount(body);
-    res.status(201).send(account);
+    await func();
   } catch (e) {
     if (e.name === 'InputError') {
       res.status(400).send(e.data);
@@ -11,6 +10,13 @@ const createAccount = async ({ body }, res) => {
       res.send(500).send('Internal server error');
     }
   }
+};
+
+const createAccount = async ({ body }, res) => {
+  requestAsyncWrapper(async () => {
+    const account = await accountService.createAccount(body);
+    res.status(201).send(account);
+  }, res);
 };
 
 export {

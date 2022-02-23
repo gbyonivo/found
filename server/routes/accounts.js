@@ -4,8 +4,7 @@ import { createAccount } from '../controllers/account.js';
 const router = Router();
 
 router.use((req, res, next) => {
-  console.log('Time: ', Date.now())
-  next()
+  next();
 });
 
 router.get('/:id', (req, res) => {
