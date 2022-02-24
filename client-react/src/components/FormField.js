@@ -7,7 +7,7 @@ const FormField = ({ error, children, label }) => {
     <div className="">
       {children}
     </div>
-    {error && <div>{error}</div>}
+    {error && <div className="text-xs text-red-500">{error}</div>}
   </div>
 }
 

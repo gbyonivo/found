@@ -1,10 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button';
+import FormField from '../../components/FormField';
+import TextInput from '../../components/TextInput';
+import { getLoginError } from '../../functions/error';
+import foundAxios from '../../api/foundAxois';
 
 const Login = () => {
-  return <div className="h-64 w-96 rounded p-2">
-    <h1 className="text center font-light">Sign in</h1>
-    <div className="bg-white rounded">
+  const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
 
+  const login = async () => {
+    setBusy(true);
+    try {
+      const { data: token } = await foundAxios.post('/login', { password, email });
+      localStorage.setItem('token', token);
+      setBusy(false);
+      navigate('/found/reports');
+    } catch (e) {
+      setError(getLoginError(e));
+      setBusy(false);
+    }
+  };
+
+
+  return <div className="h-auto w-96 rounded p-2 font-light">
+    <h2 className="text-white">Sign in</h2>
+    <div className="mt-4 border-t border-gray-300 bg-white rounded px-4 py-6">
+      <FormField label="Email">
+        <TextInput onChange={setEmail} value={email} type="email" />
+      </FormField>
+      <FormField label="Password">
+        <TextInput onChange={setPassword} value={password} type="password" />
+      </FormField>
+      {error &&<div className="my-2 text-xs text-red-500">{error}</div>}
+      <div className="mt-4 flex justify-right">
+        <Button onClick={login} value="Sign in" busy={busy} />
+      </div>
     </div>
   </div>;
 };

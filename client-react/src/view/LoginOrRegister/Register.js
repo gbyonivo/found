@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import FormField from '../../components/FormField';
 import TextInput from '../../components/TextInput';
-import foundAxios from '../../helper/foundAxois';
+import { getRegistrationError } from '../../functions/error';
+import foundAxios from '../../api/foundAxois';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
@@ -16,33 +19,33 @@ const Register = () => {
   const register = async () => {
     setBusy(true);
     try {
-      const token = await foundAxios.post('/accounts', { firstName, lastName, password, email, phone });
-      console.log(token);
+      const { data: token } = await foundAxios.post('/accounts', { firstName, lastName, password, email, phone });
+      localStorage.setItem('token', token);
       setBusy(false);
+      navigate('/found/reports');
     } catch (e) {
-      console.error(e);
-      setError(e);
+      setError(getRegistrationError(e));
       setBusy(false);
     }
   };
 
 
   return <div className="h-auto w-96 rounded p-2 font-light">
-    <h2>Sign up</h2>
+    <h2 className="text-white">Sign up</h2>
     <div className="mt-4 border-t border-gray-300 bg-white rounded px-4 py-6">
-      <FormField label="First name">
+      <FormField label="First name" error={error.firstName}>
         <TextInput onChange={setFirstName} value={firstName} />
       </FormField>
-      <FormField label="Last name">
+      <FormField label="Last name" error={error.lastName}>
         <TextInput onChange={setLastName} value={lastName} />
       </FormField>
-      <FormField label="Phone">
+      <FormField label="Phone" error={error.phone}>
         <TextInput onChange={setPhone} value={phone} type="phone" />
       </FormField>
-      <FormField label="Email">
+      <FormField label="Email" error={error.email}>
         <TextInput onChange={setEmail} value={email} type="email" />
       </FormField>
-      <FormField label="Password">
+      <FormField label="Password" error={error.password}>
         <TextInput onChange={setPassword} value={password} type="password" />
       </FormField>
       <div className="mt-4 flex justify-right">
