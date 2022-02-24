@@ -6,17 +6,20 @@ import Reports from './view/Reports';
 import Menu from './view/Menu';
 import reportWebVitals from './reportWebVitals';
 import LoginOrRegister from './view/LoginOrRegister';
+import UserContextProvider from './contexts/UserContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginOrRegister />} />
-        <Route path="found" element={<Menu />} >
-          <Route path="reports" element={<Reports />} />
-          <Route path="accounts" element={<Reports />} />
-        </Route>
-      </Routes>
+      <UserContextProvider>
+        <Routes>
+          <Route path="/" element={<LoginOrRegister />} />
+          <Route path="found" element={<Menu />} >
+            <Route path="reports" element={<Reports />} />
+            <Route path="accounts" element={<Reports />} />
+          </Route>
+        </Routes>
+      </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

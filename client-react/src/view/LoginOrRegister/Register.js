@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import FormField from '../../components/FormField';
 import TextInput from '../../components/TextInput';
 import { getRegistrationError } from '../../functions/error';
 import foundAxios from '../../api/foundAxois';
+import { UserContext } from '../../contexts/UserContextProvider';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { setToken } = useContext(UserContext);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +23,7 @@ const Register = () => {
     try {
       const { data: token } = await foundAxios.post('/accounts', { firstName, lastName, password, email, phone });
       localStorage.setItem('token', token);
+      setToken(token);
       setBusy(false);
       navigate('/found/reports');
     } catch (e) {
