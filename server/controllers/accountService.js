@@ -3,7 +3,7 @@ import { accountAttributes, accountSchema } from '../helpers/account.js';
 import InputError from '../helpers/InputError.js';
 
 const createAccount = async (account) => {
-  const { value, error } = accountSchema.validate(account);
+  const { value, error, ...rest } = accountSchema.validate(account);
   if (error) throw new InputError(error);
   return Account.create(value);
 };
