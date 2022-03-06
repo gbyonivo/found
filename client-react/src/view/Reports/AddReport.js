@@ -25,7 +25,7 @@ const AddReport = () => {
     <div className="mb-2">
       <TextInput value={itemName} onChange={onChange} large />
     </div>
-    <Button value="Report an item" onClick={onClick} busy={addingReport} />
+    {<Button value="Report an item" onClick={onClick} busy={addingReport} />}
   </div>;
 };
 

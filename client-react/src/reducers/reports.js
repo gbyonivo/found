@@ -4,7 +4,10 @@ import {
   FETCH_REPORTS,
   ERROR_ADDING_REPORT,
   ADD_REPORT,
-  DONE_ADDING_REPORT
+  DONE_ADDING_REPORT,
+  FETCH_REPORT,
+  ERROR_FETCHING_REPORT,
+  DONE_FETCHING_REPORT
 } from '../constants/actions';
 
 export const initialState = {
@@ -13,17 +16,40 @@ export const initialState = {
   fetchingReports: false,
   addingReport: false,
   errorAddingReport: null,
+  fetchingSelectedReport: false,
+  errorFetchingSelectedReport: null,
+  selectedReport: null,
 };
 
 const handlers = {
+  [FETCH_REPORT]: (state) => ({
+    ...state,
+    errorFetchingSelectedReport: null,
+    selectedReport: null,
+    fetchingSelectedReport: true,
+  }),
+  [ERROR_FETCHING_REPORT]: (state, { error }) => ({
+    ...state,
+    errorFetchingSelectedReport: error,
+    fetchingSelectedReport: false,
+  }),
+  [DONE_FETCHING_REPORT]: (state, { report }) => ({
+    ...state,
+    fetchingSelectedReport: false,
+    selectedReport: report,
+    reports: {
+      ...state.reports,
+      [report.id]: report
+    }
+  }),
   [FETCH_REPORTS]: (state) => ({
     ...state,
     errorFetchingReports: null,
     fetchingReports: true,
   }),
-  [ERROR_FETCHING_REPORTS]: (state, { error: errorFetchingReports }) => ({
+  [ERROR_FETCHING_REPORTS]: (state, { error }) => ({
     ...state,
-    errorFetchingReports,
+    errorFetchingReports: error,
     fetchingReports: false,
   }),
   [DONE_FETCHING_REPORTS]: (state, { reports }) => ({
