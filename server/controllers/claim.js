@@ -17,8 +17,10 @@ const getClaimsMadeByAccount = async (req, res) => {
 
 const getReportClaims = async (req, res) => {
   requestAsyncWrapper(async () => {
-    const claim = await claimService.getReportClaims();
-    res.status(200).send(claim);
+    const claims = await claimService.getReportClaims({
+      reportId: req.params.id, accountId: req.signedInAccount.id,
+    });
+    res.status(200).send(claims);
   }, res);
 };
 

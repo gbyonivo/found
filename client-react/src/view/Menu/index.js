@@ -38,7 +38,7 @@ const Menu = () => {
         )}
       </div>
       <div className="text-center w-full cursor-pointer flex mt-4 p-4" role="button" onClick={signOut}>
-        <div className="flex mr-2"><ImExit size={22} /></div>
+        <div className="flex mr-4"><ImExit size={22} /></div>
         Sign out
       </div>
     </div>

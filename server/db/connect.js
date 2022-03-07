@@ -15,7 +15,7 @@ const Account = connection.define('account', account);
 
 Account.hasMany(Claim, { as: 'Claims', foreignKey: 'accountId' });
 Account.hasMany(Report, { as: 'Reports', foreignKey: 'accountId' });
-Report.hasOne(Claim, { as: 'AcceptedClaim', foreignKey: 'claimId' });
+// Report.hasOne(Claim, { as: 'AcceptedClaim', foreignKey: 'claimId' });
 Report.hasMany(Claim, { as: 'Claims', foreignKey: 'reportId' });
 
 export {

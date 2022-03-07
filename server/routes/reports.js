@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getReportClaims } from '../controllers/claimService.js';
+import { getReportClaims } from '../controllers/claim.js';
 import { authenticateToken } from '../controllers/login.js';
 import { createReport, getReport, getReports } from '../controllers/report.js';
 
