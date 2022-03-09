@@ -42,7 +42,7 @@ const Menu = () => {
         Sign out
       </div>
     </div>
-    <div className="flex-1">
+    <div className="flex-1 overflow-auto h-full">
       <Outlet />
     </div>
   </div>

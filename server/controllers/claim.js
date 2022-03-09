@@ -8,6 +8,13 @@ const createClaim = async ({ body, signedInAccount }, res) => {
   }, res);
 };
 
+const answerClaim = async ({ body, signedInAccount, params }, res) => {
+  requestAsyncWrapper(async () => {
+    await claimService.answerClaim({ ...body, accountId: signedInAccount.id, reportId: params.id });
+    res.status(200).send({});
+  }, res);
+};
+
 const getClaimsMadeByAccount = async (req, res) => {
   requestAsyncWrapper(async () => {
     const claim = await claimService.getClaimsMadeByAccount();
@@ -36,4 +43,5 @@ export {
   getClaimsMadeByAccount,
   getReportClaims,
   getClaim,
+  answerClaim,
 };

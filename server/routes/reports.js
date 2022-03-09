@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getReportClaims } from '../controllers/claim.js';
+import { getReportClaims, answerClaim } from '../controllers/claim.js';
 import { authenticateToken } from '../controllers/login.js';
 import { createReport, getReport, getReports } from '../controllers/report.js';
 
@@ -15,5 +15,7 @@ router.post('/', createReport);
 
 // claims
 router.get('/:id/claims', getReportClaims);
+
+router.post('/:id/answer', answerClaim);
 
 export default router;

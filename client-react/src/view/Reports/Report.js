@@ -16,7 +16,7 @@ const Report = ({ report: { itemName, createdAt, id }, allowedToClaim }) => {
       </div>
       <div className="pt-3 rounded text-sm">{readableCreatedAt}</div>
       {allowedToClaim && <div className="">
-        <Button onClick={() => navigate(`${id}`)} value="Claim"/>
+        <Button onClick={() => navigate(`${id}`)} value="Claim" />
       </div>}
     </div>
   </div>;

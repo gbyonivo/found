@@ -12,6 +12,25 @@ const requestAsyncWrapper = async (func, res) => {
   }
 };
 
+const statusses = {
+  APPROVED: {
+    label: 'Approved',
+    value: 'APPROVED',
+    colour: 'green',
+  },
+  DENIED: {
+    label: 'Denied',
+    value: 'DENIED',
+    colour: 'red',
+  },
+  PENDING: {
+    label: 'Pending',
+    value: 'PENDING',
+    colour: 'yellow',
+  },
+};
+
 export {
   requestAsyncWrapper,
+  statusses,
 };

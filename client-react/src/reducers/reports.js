@@ -14,7 +14,17 @@ import {
   FETCH_CLAIMS,
   DONE_FETCHING_CLAIMS,
   ERROR_FETCHING_CLAIMS,
+  ANSWER_CLAIM,
+  DONE_ANSWERING_CLAIM,
+  ERROR_ANSWERING_CLAIM,
 } from '../constants/actions';
+import { statusses } from '../constants/common';
+
+const createNewStatus = (claimId, status, curr) => {
+  if (claimId === curr.id) return status;
+  if (status === statusses.APPROVED.value) return statusses.DENIED.value;
+  return curr.status;
+};
 
 export const initialState = {
   reports: [],
@@ -28,6 +38,8 @@ export const initialState = {
   claims: {},
   fetchingClaims: false,
   errorFetchingClaims: null,
+  answeringClaim: false,
+  errorAnsweringClaim: null
 };
 
 const handlers = {
@@ -116,12 +128,12 @@ const handlers = {
     claims: {
       ...state.claims,
       ...claims.reduce((acc, curr) => ({
-        ...acc,
-        [curr.reportId]: {
-          ...(state.claims[curr.reportId] || {}),
-          [curr.id]: curr
-        }
-      }), {})
+          ...acc,
+          [curr.reportId]: {
+            ...(acc[curr.reportId] || {}),
+            [curr.id]: curr
+          }
+        }), {})
     },
     fetchingClaims: false
   }),
@@ -129,7 +141,31 @@ const handlers = {
     ...state,
     errorFetchingClaims: error,
     fetchingClaims: false
-  })
+  }),
+  [ANSWER_CLAIM]: (state) => ({
+    ...state,
+    answeringClaim: true,
+    errorAnsweringClaim: null
+  }),
+  [DONE_ANSWERING_CLAIM]: (state, { status, claimId, reportId }) => ({
+    ...state,
+    claims: {
+      ...state.claims,
+      [reportId]: Object.values(state.claims[reportId]).reduce((acc, curr) => ({
+        ...acc,
+        [curr.id]: {
+          ...curr,
+          status: createNewStatus(claimId, status, curr), 
+        },
+      }), {}),
+    },
+    answeringClaim: false
+  }),
+  [ERROR_ANSWERING_CLAIM]: (state, { error }) => ({
+    ...state,
+    answeringClaim: false,
+    errorAnsweringClaim: error
+  }),
 };
 
 const reportsReducer = (state = initialState, { type, payload }) => {

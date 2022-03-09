@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 import FormField from '../../components/FormField';
@@ -17,19 +17,23 @@ const AddClaim = () => {
     setError('');
   };
 
-  const submitClaim = async () => {
-    if (description.length < 20) {
-      setError('can not be less than 20');
-      return;
+  const submitClaim = useCallback(() => {
+    const submit = async () => {
+      if (description.length < 20) {
+        setError('can not be less than 20');
+        return;
+      }
+      dispatch({ type: ADD_CLAIM });
+      try {
+        const { data } = await createClaim({ description, reportId: selectedReport.id });
+        setDescription('');
+        dispatch({ type: DONE_ADDING_CLAIM, payload: { claim: data } })
+      } catch (e) {
+        dispatch({ type: ERROR_ADDING_CLAIM, payload: { error: 'Error encountered adding claim' } });
+      }
     }
-    dispatch({ type: ADD_CLAIM });
-    try {
-      const { data } = await createClaim({ description, reportId: selectedReport.id });
-      dispatch({ type: DONE_ADDING_CLAIM, payload: { claim: data } })
-    } catch (e) {
-      dispatch({ type: ERROR_ADDING_CLAIM, payload: { error: 'Error encountered adding claim' } });
-    }
-  };
+    submit();
+  }, [description, dispatch, selectedReport.id]);
 
   return (<div>
     <FormField label="Claim this item" error={error}>

@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
-import { fetchClaims, fetchReport } from '../api/reports';
+import { useCallback, useEffect } from 'react';
+import { answerClaim, fetchClaims, fetchReport } from '../api/reports';
 import {
   DONE_FETCHING_REPORT,
   ERROR_FETCHING_REPORT,
   FETCH_REPORT,
   FETCH_CLAIMS,
   DONE_FETCHING_CLAIMS,
-  ERROR_FETCHING_CLAIMS
+  ERROR_FETCHING_CLAIMS,
+  ANSWER_CLAIM,
+  DONE_ANSWERING_CLAIM,
+  ERROR_ANSWERING_CLAIM
 } from '../constants/actions';
 
 const useReportAndClaims = ({ existingReport, dispatch, id }) => {
@@ -30,19 +33,30 @@ const useReportAndClaims = ({ existingReport, dispatch, id }) => {
   useEffect(() => {
     const getClaims = async () => {
       dispatch({ type: FETCH_CLAIMS });
-      console.log('here')
       try {
-        console.log('here now')
         const { data } = await fetchClaims(id);
-        console.log('here')
         dispatch({ type: DONE_FETCHING_CLAIMS, payload: { claims: data } });
       } catch (e) {
-        console.log(e)
         dispatch({ type: ERROR_FETCHING_CLAIMS, payload: { error: 'data' } });
       }
     };
     getClaims();
   }, [id, dispatch])
+
+  const answer = useCallback((sts, claimId) => {
+    const handleClick = async () => {
+      dispatch({ type: ANSWER_CLAIM });
+      try {
+        await answerClaim({ reportId: id, claimId, status: sts });
+        dispatch({ type: DONE_ANSWERING_CLAIM, payload: { reportId: id, claimId, status: sts } });
+      } catch (e) {
+        dispatch({ type: ERROR_ANSWERING_CLAIM, payload: { error: 'Error answering claim'} })
+      }
+    }
+    handleClick();
+  }, [dispatch, id]);
+
+  return answer;
 };
 
 export default useReportAndClaims;
