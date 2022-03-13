@@ -7,8 +7,11 @@ import { ADD_CLAIM, DONE_ADDING_CLAIM, ERROR_ADDING_CLAIM } from '../../constant
 import { createClaim } from '../../api/reports';
 import ErrorView from '../../components/ErrorView';
 
-const AddClaim = () => {
-  const { state: { selectedReport, addingClaim, errorAddingClaim  }, dispatch } = useContext(AppStateContext)
+function AddClaim() {
+  const {
+    state: { selectedReport, addingClaim, errorAddingClaim },
+    dispatch,
+  } = useContext(AppStateContext)
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
 
@@ -35,18 +38,22 @@ const AddClaim = () => {
     submit();
   }, [description, dispatch, selectedReport.id]);
 
-  return (<div>
-    <FormField label="Claim this item" error={error}>
-      <TextInput value={description} onChange={onChangeDescription} large />
-    </FormField>
-    {errorAddingClaim && <div className="my-2">
-      <ErrorView error={errorAddingClaim} />
-    </div>}
-    <div className="mt-4">
-      <Button value="Submit claim"  busy={ addingClaim } onClick={ submitClaim } />
+  return (
+    <div>
+      <FormField label="Claim this item" error={error}>
+        <TextInput value={description} onChange={onChangeDescription} large />
+      </FormField>
+      {errorAddingClaim && (
+      <div className="my-2">
+        <ErrorView error={errorAddingClaim} />
+      </div>
+      )}
+      <div className="mt-4">
+        <Button value="Submit claim" busy={addingClaim} onClick={submitClaim} />
+      </div>
+
     </div>
-    
-  </div>);
-};
+  );
+}
 
 export default AddClaim;

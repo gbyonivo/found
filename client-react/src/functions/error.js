@@ -1,4 +1,4 @@
-import { GENERIC_ERROR_MESSAGE } from "../constants/common";
+import { GENERIC_ERROR_MESSAGE } from '../constants/common';
 
 const getRegistrationError = (e) => {
   if (e && e.response && e.response.data && e.response.data.error) {
@@ -16,5 +16,5 @@ const getLoginError = (e) => {
 
 export {
   getRegistrationError,
-  getLoginError
+  getLoginError,
 };

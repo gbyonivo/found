@@ -1,19 +1,22 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import reportsReducer, { initialState } from '../reducers/reports';
 
 export const AppStateContext = createContext();
 
-const AppStateContextProvider = ({ children }) => {
+function AppStateContextProvider({ children }) {
   const [state, dispatch] = useReducer(reportsReducer, initialState);
+  const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
-  return <AppStateContext.Provider value={{ state, dispatch }}>
-    {children}
-  </AppStateContext.Provider>
-};
+  return (
+    <AppStateContext.Provider value={value}>
+      {children}
+    </AppStateContext.Provider>
+  )
+}
 
 AppStateContextProvider.propTypes = {
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default AppStateContextProvider;

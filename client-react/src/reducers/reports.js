@@ -39,7 +39,7 @@ export const initialState = {
   fetchingClaims: false,
   errorFetchingClaims: null,
   answeringClaim: false,
-  errorAnsweringClaim: null
+  errorAnsweringClaim: null,
 };
 
 const handlers = {
@@ -60,8 +60,8 @@ const handlers = {
     selectedReport: report,
     reports: {
       ...state.reports,
-      [report.id]: report
-    }
+      [report.id]: report,
+    },
   }),
   [FETCH_REPORTS]: (state) => ({
     ...state,
@@ -86,13 +86,11 @@ const handlers = {
     addingReport: true,
     errorAddingReport: null,
   }),
-  [DONE_ADDING_REPORT]: (state, { report }) => {
-    return {
-      ...state,
-      addingReport: false,
-      reports: { ...state.reports, [report.id]: report },
-    }
-  },
+  [DONE_ADDING_REPORT]: (state, { report }) => ({
+    ...state,
+    addingReport: false,
+    reports: { ...state.reports, [report.id]: report },
+  }),
   [ERROR_ADDING_REPORT]: (state, { error }) => ({
     ...state,
     addingReport: false,
@@ -110,9 +108,9 @@ const handlers = {
       ...state.claims,
       [claim.reportId]: {
         ...(state.claims[claim.reportId] || {}),
-        [claim.id]: claim
-      }
-    }
+        [claim.id]: claim,
+      },
+    },
   }),
   [ERROR_ADDING_CLAIM]: (state, { error }) => ({
     ...state,
@@ -121,31 +119,31 @@ const handlers = {
   }),
   [FETCH_CLAIMS]: (state) => ({
     ...state,
-    fetchingClaims: true
+    fetchingClaims: true,
   }),
   [DONE_FETCHING_CLAIMS]: (state, { claims }) => ({
     ...state,
     claims: {
       ...state.claims,
       ...claims.reduce((acc, curr) => ({
-          ...acc,
-          [curr.reportId]: {
-            ...(acc[curr.reportId] || {}),
-            [curr.id]: curr
-          }
-        }), {})
+        ...acc,
+        [curr.reportId]: {
+          ...(acc[curr.reportId] || {}),
+          [curr.id]: curr,
+        },
+      }), {}),
     },
-    fetchingClaims: false
+    fetchingClaims: false,
   }),
   [ERROR_FETCHING_CLAIMS]: (state, { error }) => ({
     ...state,
     errorFetchingClaims: error,
-    fetchingClaims: false
+    fetchingClaims: false,
   }),
   [ANSWER_CLAIM]: (state) => ({
     ...state,
     answeringClaim: true,
-    errorAnsweringClaim: null
+    errorAnsweringClaim: null,
   }),
   [DONE_ANSWERING_CLAIM]: (state, { status, claimId, reportId }) => ({
     ...state,
@@ -155,20 +153,20 @@ const handlers = {
         ...acc,
         [curr.id]: {
           ...curr,
-          status: createNewStatus(claimId, status, curr), 
+          status: createNewStatus(claimId, status, curr),
         },
       }), {}),
     },
-    answeringClaim: false
+    answeringClaim: false,
   }),
   [ERROR_ANSWERING_CLAIM]: (state, { error }) => ({
     ...state,
     answeringClaim: false,
-    errorAnsweringClaim: error
+    errorAnsweringClaim: error,
   }),
 };
 
-const reportsReducer = (state = initialState, { type, payload }) => {
+const reportsReducer = (state, { type, payload }) => {
   const handler = handlers[type];
   return handler ? handler(state, payload) : state;
 };

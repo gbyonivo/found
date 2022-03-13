@@ -4,16 +4,16 @@ export const statusses = {
   APPROVED: {
     label: 'Approved',
     value: 'APPROVED',
-    colour: 'bg-green-200'
+    colour: 'bg-green-200',
   },
   DENIED: {
     label: 'Denied',
     value: 'DENIED',
-    colour: 'bg-red-200'
+    colour: 'bg-red-200',
   },
   PENDING: {
     label: 'Pending',
     value: 'PENDING',
-    colour: 'bg-yellow-200'
-  }
+    colour: 'bg-yellow-200',
+  },
 };

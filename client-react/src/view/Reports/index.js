@@ -8,36 +8,43 @@ import { sortByProperty } from '../../functions/common';
 import AddReport from './AddReport';
 import Report from './Report';
 
-const Reports = () => {
-  const { dispatch, state: { fetchingReports, reports, errorFetchingReports } } = useContext(AppStateContext);
+function Reports() {
+  const {
+    dispatch,
+    state: { fetchingReports, reports, errorFetchingReports },
+  } = useContext(AppStateContext);
   const { user } = useContext(UserContext);
   useEffect(() => {
     const getReports = async () => {
       dispatch({ type: FETCH_REPORTS })
       try {
-        const { data: reports } = await fetchReports();
-        dispatch({ type: DONE_FETCHING_REPORTS, payload: { reports } })
+        const { data } = await fetchReports();
+        dispatch({ type: DONE_FETCHING_REPORTS, payload: { reports: data } })
       } catch (e) {
         dispatch({ type: ERROR_FETCHING_REPORTS, payload: { error: e } });
       }
     }
     getReports();
   }, [dispatch]);
-  return (<div className="w-full p-8">
-    <h1 className="mb-6 font-bolder text-xl">Reports</h1>
-    <AddReport />
-    <FetchWrapper fetching={fetchingReports} error={errorFetchingReports}>
-      <div className="mt-4 w-full">
-        <div className="grid grid-cols-2 gap-4">
-          {sortByProperty(Object.values(reports), 'createdAt').map((report) => <Report
-            key={report.id}
-            report={report}
-            allowedToClaim={report.accountId !== user.id}
-          />)}
+  return (
+    <div className="w-full p-8">
+      <h1 className="mb-6 font-bolder text-xl">Reports</h1>
+      <AddReport />
+      <FetchWrapper fetching={fetchingReports} error={errorFetchingReports}>
+        <div className="mt-4 w-full">
+          <div className="grid grid-cols-2 gap-4">
+            {sortByProperty(Object.values(reports), 'createdAt').map((report) => (
+              <Report
+                key={report.id}
+                report={report}
+                allowedToClaim={report.accountId !== user.id}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </FetchWrapper>
-  </div>);
-};
+      </FetchWrapper>
+    </div>
+  );
+}
 
 export default Reports;
