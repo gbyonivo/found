@@ -7,7 +7,8 @@ function FetchWrapper({ fetching, error, children }) {
   if (fetching) return <Spinner />
   if (error) return <div className="m-8"><ErrorView /></div>
 
-  return { children }
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{ children }</>
 }
 
 FetchWrapper.defaultProps = {
@@ -17,7 +18,10 @@ FetchWrapper.defaultProps = {
 FetchWrapper.propTypes = {
   fetching: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default FetchWrapper;

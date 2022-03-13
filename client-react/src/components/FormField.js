@@ -20,7 +20,10 @@ FormField.defaultProps = {
 
 FormField.propTypes = {
   label: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   error: PropTypes.string,
 };
 
