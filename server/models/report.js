@@ -4,7 +4,7 @@ const report = {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   itemName: {
     type: DataTypes.STRING,
@@ -12,15 +12,15 @@ const report = {
   },
   accountId: {
     type: DataTypes.INTEGER,
-    foreignKey: true
+    foreignKey: true,
   },
   claimId: {
     type: DataTypes.INTEGER,
     foreignKey: true,
-    allowNull: true
-  }
+    allowNull: true,
+  },
 };
 
 export {
-  report
+  report,
 };

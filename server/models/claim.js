@@ -4,7 +4,7 @@ const claim = {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   description: {
     type: DataTypes.TEXT,
@@ -16,14 +16,14 @@ const claim = {
   },
   accountId: {
     type: DataTypes.INTEGER,
-    foreignKey: true
+    foreignKey: true,
   },
   reportId: {
     type: DataTypes.INTEGER,
-    foreignKey: true
+    foreignKey: true,
   },
 };
 
 export {
-  claim
+  claim,
 };

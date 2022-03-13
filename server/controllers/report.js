@@ -10,7 +10,7 @@ const createReport = async ({ body, signedInAccount }, res) => {
 
 const getReports = async (req, res) => {
   requestAsyncWrapper(async () => {
-    const report = await reportService.getReports();
+    const report = await reportService.getReports(req.params);
     res.status(200).send(report);
   }, res);
 };
@@ -22,8 +22,16 @@ const getReport = async (req, res) => {
   }, res);
 };
 
+const getReportDateMargins = async (req, res) => {
+  requestAsyncWrapper(async () => {
+    const margins = await reportService.getDateMargins();
+    res.status(200).send(margins);
+  }, res);
+};
+
 export {
   createReport,
   getReports,
   getReport,
+  getReportDateMargins,
 };
