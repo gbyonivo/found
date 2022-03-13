@@ -1,15 +1,19 @@
 import { Router } from 'express';
 import { getReportClaims, answerClaim } from '../controllers/claim.js';
 import { authenticateToken } from '../controllers/login.js';
-import { createReport, getReport, getReports } from '../controllers/report.js';
+import {
+  createReport, getReport, getReportDateMargins, getReports,
+} from '../controllers/report.js';
 
 const router = Router();
 
 router.use(authenticateToken);
 
-router.get('/:id', getReport);
-
 router.get('/', getReports);
+
+router.get('/date-margins', getReportDateMargins);
+
+router.get('/:id', getReport);
 
 router.post('/', createReport);
 

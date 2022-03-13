@@ -24,8 +24,34 @@ const getAccount = async (req, res) => {
   }, res);
 };
 
+const getMyAccount = async ({ signedInAccount }, res) => {
+  requestAsyncWrapper(async () => {
+    const account = await accountService.getAccount(signedInAccount.id);
+    res.status(200).send(account);
+  }, res);
+};
+
+const updateMyAccount = async ({ signedInAccount, body: { firstName, lastName, email } }, res) => {
+  requestAsyncWrapper(async () => {
+    const tokenAndAccount = await accountService
+      .updateAccount(signedInAccount.id, { firstName, lastName, email });
+    res.status(200).send(tokenAndAccount);
+  }, res);
+};
+
+const deleteMyAccount = async ({ signedInAccount }, res) => {
+  requestAsyncWrapper(async () => {
+    await accountService
+      .deleteAccount(signedInAccount.id);
+    res.status(200).send();
+  }, res);
+};
+
 export {
   createAccount,
   getAccounts,
   getAccount,
+  getMyAccount,
+  updateMyAccount,
+  deleteMyAccount,
 };

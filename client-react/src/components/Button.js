@@ -8,7 +8,7 @@ const Button = ({ busy, disabled, value, onClick, className, colour }) => {
   };
 
   const classNames = useMemo(() => `rounded h-10 text-sm py-1 px-2 text-center 
-  min-w-32 text-white ${className}`, [className]);
+  min-w-32 text-white ${className} ${disabled ? 'not-allowed' : 'pointer'}`, [className, disabled]);
 
 
   return <button onClick={onClickButton} className={`${classNames} ${colour}`}>

@@ -7,6 +7,7 @@ import useReportAndClaims from '../../hooks/useReportAndClaims';
 import ErrorView from '../../components/ErrorView';
 import Claim from './Claim';
 import AddClaim from './AddClaim';
+import { sortByProperty } from '../../functions/common';
 
 const ReportDetails = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const ReportDetails = () => {
   const { user } = useContext(UserContext);
   const existingReport = reports[id];
   const answer = useReportAndClaims({ existingReport, dispatch, id });
-  const claimsArr = Object.values(claims[id] || {});
+  const claimsArr = sortByProperty(Object.values(claims[id] || {}), 'createdAt');
   if (fetchingSelectedReport || !selectedReport || fetchingClaims) return <Spinner />
   if (errorFetchingClaims || errorFetchingSelectedReport) return <ErrorView error={errorFetchingClaims || errorFetchingSelectedReport} />
   return (<div className='p-8 h-full flex flex-col'>

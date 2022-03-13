@@ -1,9 +1,10 @@
+import jwt from 'jsonwebtoken';
 import { Account } from '../db/connect.js';
 import { accountAttributes, accountSchema } from '../helpers/account.js';
 import InputError from '../helpers/InputError.js';
 
 const createAccount = async (account) => {
-  const { value, error, ...rest } = accountSchema.validate(account);
+  const { value, error } = accountSchema.validate(account);
   if (error) throw new InputError(error);
   return Account.create(value);
 };
@@ -19,8 +20,22 @@ const getAccount = async (accountId) => Account
 const getAccounts = async () => Account
   .findAll({ attributes: accountAttributes });
 
-const deleteAccount = async (accountId) => Account
-  .destroy({ where: { id: accountId } });
+const updateAccount = async (accountId, { email, firstName, lastName }) => {
+  let newAccountValues = {};
+  if (email) newAccountValues = { ...newAccountValues, email };
+  if (firstName) newAccountValues = { ...newAccountValues, firstName };
+  if (lastName) newAccountValues = { ...newAccountValues, lastName };
+  await Account.update(newAccountValues, { where: { id: accountId } });
+  const account = await getAccount(accountId);
+  return {
+    token: jwt.sign({ email: account.email, id: accountId }, process.env.SECRET),
+    account,
+  };
+};
+
+const deleteAccount = async (accountId) => {
+  await Account.destroy({ where: { id: accountId } });
+};
 
 export {
   createAccount,
@@ -28,4 +43,5 @@ export {
   getAccount,
   deleteAccount,
   getAccountByEmailAndPassword,
+  updateAccount,
 };

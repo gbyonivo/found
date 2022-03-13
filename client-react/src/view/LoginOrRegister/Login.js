@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import FormField from '../../components/FormField';
 import TextInput from '../../components/TextInput';
@@ -8,7 +7,6 @@ import foundAxios from '../../api/foundAxois';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 const Login = () => {
-  const navigate = useNavigate();
   const { setToken } = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -21,8 +19,7 @@ const Login = () => {
       const { data: token } = await foundAxios.post('/login', { password, email });
       localStorage.setItem('token', token);
       setToken(token);
-      setBusy(false);
-      navigate('/found/reports');
+      location.href = '/found/reports'; // eslint-disable-line
     } catch (e) {
       setError(getLoginError(e));
       setBusy(false);

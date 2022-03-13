@@ -1,21 +1,21 @@
 import { Router } from 'express';
-import { createAccount, getAccount, getAccounts } from '../controllers/account.js';
+import {
+  createAccount, deleteMyAccount, getAccount, getAccounts, getMyAccount, updateMyAccount,
+} from '../controllers/account.js';
 import { authenticateToken } from '../controllers/login.js';
 
 const router = Router();
-
-router.get('/:id', getAccount);
 
 router.get('/', getAccounts);
 
 router.post('/', createAccount);
 
-router.delete('/my-account', authenticateToken, (req, res) => {
-  res.send('delete my account');
-});
+router.get('/my-account', authenticateToken, getMyAccount);
 
-router.put('/my-account', authenticateToken, (req, res) => {
-  res.send('update user');
-});
+router.delete('/my-account', authenticateToken, deleteMyAccount);
+
+router.put('/my-account', authenticateToken, updateMyAccount);
+
+router.get('/:id', getAccount);
 
 export default router;

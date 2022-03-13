@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import FormField from '../../components/FormField';
 import TextInput from '../../components/TextInput';
@@ -8,7 +7,6 @@ import foundAxios from '../../api/foundAxois';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 const Register = () => {
-  const navigate = useNavigate();
   const { setToken } = useContext(UserContext);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -25,7 +23,7 @@ const Register = () => {
       localStorage.setItem('token', token);
       setToken(token);
       setBusy(false);
-      navigate('/found/reports');
+      location.href = '/found/reports'; // eslint-disable-line
     } catch (e) {
       setError(getRegistrationError(e));
       setBusy(false);

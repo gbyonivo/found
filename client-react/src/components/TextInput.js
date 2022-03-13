@@ -6,7 +6,7 @@ const basicClassName = {
   large: 'px-2 h-16 my-1 text-lg'
 };
 
-const TextInput = ({ value, type, onChange, error, large }) => {
+const TextInput = ({ value, type, onChange, error, large, placeholder }) => {
   const size = useMemo(() => large ? 'large' : 'normal', [large])
   const onChangeText = ({ target: { value } }) => {
     onChange(value);
@@ -19,12 +19,14 @@ const TextInput = ({ value, type, onChange, error, large }) => {
     className={classNames}
     type = {type}
     value={value}
+    placeholder={placeholder}
     onChange={onChangeText}
   />
 };
 
 TextInput.defaultProps = {
   value: '',
+  placeholder: '',
   type: 'text',
   error: false,
   large: false
@@ -36,6 +38,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
   large: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default TextInput;

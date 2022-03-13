@@ -4,6 +4,7 @@ const requestAsyncWrapper = async (func, res) => {
   try {
     await func();
   } catch (e) {
+    console.log(e);
     if (e.name === InputError.name) {
       res.status(400).send(e.data);
     } else {
