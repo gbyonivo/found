@@ -6,7 +6,6 @@ const useAccountApiCalls = ({
   setError,
   setAccount,
   setDeletingAccount,
-  ...rest
 }) => {
   useEffect(() => {
     const getAccount = async () => {
@@ -47,10 +46,8 @@ const useAccountApiCalls = ({
 
   return {
     updateAccount,
-    deleteAccount
+    deleteAccount,
   }
 };
 
-export {
-  useAccountApiCalls,
-};
+export default useAccountApiCalls;

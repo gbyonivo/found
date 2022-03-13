@@ -18,7 +18,7 @@ ReactDOM.render(
         <AppStateContextProvider>
           <Routes>
             <Route path="/" element={<LoginOrRegister />} />
-            <Route path="found" element={<Menu />} >
+            <Route path="found" element={<Menu />}>
               <Route path="reports" element={<Reports />} />
               <Route path="reports/:id" element={<ReportDetails />} />
               <Route path="accounts" element={<Account />} />
@@ -28,7 +28,7 @@ ReactDOM.render(
       </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -9,7 +9,7 @@ import {
   ERROR_FETCHING_CLAIMS,
   ANSWER_CLAIM,
   DONE_ANSWERING_CLAIM,
-  ERROR_ANSWERING_CLAIM
+  ERROR_ANSWERING_CLAIM,
 } from '../constants/actions';
 
 const useReportAndClaims = ({ existingReport, dispatch, id }) => {
@@ -50,7 +50,7 @@ const useReportAndClaims = ({ existingReport, dispatch, id }) => {
         await answerClaim({ reportId: id, claimId, status: sts });
         dispatch({ type: DONE_ANSWERING_CLAIM, payload: { reportId: id, claimId, status: sts } });
       } catch (e) {
-        dispatch({ type: ERROR_ANSWERING_CLAIM, payload: { error: 'Error answering claim'} })
+        dispatch({ type: ERROR_ANSWERING_CLAIM, payload: { error: 'Error answering claim' } })
       }
     }
     handleClick();
