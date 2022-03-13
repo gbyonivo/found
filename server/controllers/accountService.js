@@ -2,16 +2,24 @@ import jwt from 'jsonwebtoken';
 import { Account } from '../db/connect.js';
 import { accountAttributes, accountSchema } from '../helpers/account.js';
 import InputError from '../helpers/InputError.js';
+import { comparePassword, hashPassword } from '../helpers/passwordHelper.js';
 
 const createAccount = async (account) => {
   const { value, error } = accountSchema.validate(account);
   if (error) throw new InputError(error);
-  return Account.create(value);
+  const password = await hashPassword(account.password);
+  return Account.create({ ...value, password });
 };
 
 const getAccountByEmailAndPassword = async ({ email, password }) => {
-  const account = await Account.findOne({ where: { email, password } });
-  return account;
+  const account = await Account.findOne({ where: { email } });
+  if (!account) return false;
+  try {
+    await comparePassword(password, account.password);
+    return account;
+  } catch (e) {
+    return false;
+  }
 };
 
 const getAccount = async (accountId) => Account
