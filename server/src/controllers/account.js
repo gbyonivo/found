@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { requestAsyncWrapper } from '../helpers/common.js';
-import * as accountService from './accountService.js';
+import { requestAsyncWrapper } from '../helpers/common';
+import * as accountService from './accountService';
 
 const createAccount = async ({ body }, res) => {
   requestAsyncWrapper(async () => {
@@ -41,8 +41,7 @@ const updateMyAccount = async ({ signedInAccount, body: { firstName, lastName, e
 
 const deleteMyAccount = async ({ signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
-    await accountService
-      .deleteAccount(signedInAccount.id);
+    await accountService.deleteAccount(signedInAccount.id);
     res.status(200).send();
   }, res);
 };

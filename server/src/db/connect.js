@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
-import { claim } from '../models/claim.js';
-import { report } from '../models/report.js';
-import { account } from '../models/account.js';
+import { claim } from '../models/claim';
+import { report } from '../models/report';
+import { account } from '../models/account';
 
 const connection = new Sequelize('found', 'root', '', {
   host: 'localhost',
