@@ -3,18 +3,27 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon ./server.js --exec babel-node",
+    "test": "jest",
+    "test:watch": "jest -- --watch",
+    "test:coverage": "jest -- --coverage"
   },
   "author": "Orkuma Ivo",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.7",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest": "^27.5.1",
     "eslint": "^8.9.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
-    "nodemon": "^2.0.15"
+    "eslint-plugin-jest": "^26.1.1",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "regenerator-runtime": "^0.13.9"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

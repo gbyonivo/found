@@ -1,7 +1,7 @@
 import sequleize from 'sequelize';
-import { Report } from '../db/connect.js';
-import { reportSchema } from '../helpers/report.js';
-import InputError from '../helpers/InputError.js';
+import { Report } from '../db/connect';
+import { reportSchema } from '../helpers/report';
+import InputError from '../helpers/InputError';
 
 const createReport = async (report) => {
   const { value, error } = reportSchema.validate(report);
@@ -18,8 +18,8 @@ const getReports = async ({ start, end }) => {
   return Report.findAll({ where });
 };
 
-const deleteReport = async (reportId) => Report
-  .destroy({ where: { id: reportId } });
+const deleteReport = async ({ reportId, accountId }) => Report
+  .destroy({ where: { id: reportId, accountId } });
 
 const getDateMargins = async () => {
   const [max, min] = await Promise.all([Report.max('createdAt'), Report.min('createdAt')]);

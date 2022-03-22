@@ -1,10 +1,10 @@
 import sequleize from 'sequelize';
-import { Claim, connection, Report } from '../db/connect.js';
-import { claimSchema } from '../helpers/claim.js';
-import { statusses } from '../helpers/common.js';
-import ForbiddenError from '../helpers/ForbiddenError.js';
-import InputError from '../helpers/InputError.js';
-import { getReport } from './reportService.js';
+import { Claim, connection, Report } from '../db/connect';
+import { claimSchema } from '../helpers/claim';
+import { statusses } from '../helpers/common';
+import ForbiddenError from '../helpers/ForbiddenError';
+import InputError from '../helpers/InputError';
+import { getReport } from './reportService';
 
 const createClaim = async (claim) => {
   const { value, error } = claimSchema.validate(claim);
@@ -18,6 +18,7 @@ const getClaim = async (claimId) => Claim
 const getReportClaims = async ({ reportId, accountId }) => {
   const report = await getReport(reportId);
   let where = { reportId };
+  // if you didn't report the item then show only the user's claims
   if (report.accountId !== accountId) {
     where = { ...where, accountId };
   }
@@ -27,8 +28,8 @@ const getReportClaims = async ({ reportId, accountId }) => {
 const getClaimsMadeByAccount = async (accountId) => Claim
   .findAll({ where: { accountId } });
 
-const deleteClaim = async (claimId) => Claim
-  .destroy({ where: { id: claimId } });
+const deleteClaim = async ({ claimId, accountId }) => Claim
+  .destroy({ where: { id: claimId, accountId } });
 
 const answerClaim = async ({
   claimId, reportId, status, accountId,
@@ -37,7 +38,7 @@ const answerClaim = async ({
   if (accountId !== report.accountId) {
     throw new ForbiddenError();
   }
-  connection.transaction(async (transaction) => {
+  return connection.transaction(async (transaction) => {
     try {
       await Claim.update({ status }, { where: { id: claimId }, transaction });
       if (statusses.APPROVED.value === status) {
@@ -45,13 +46,14 @@ const answerClaim = async ({
           { status: statusses.DENIED.value },
           { where: { id: { [sequleize.Op.not]: claimId }, reportId }, transaction },
         );
+        await Report.update({ claimId }, { where: { id: reportId }, transaction });
       }
-      await Report.update({ claimId }, { where: { id: reportId }, transaction });
+      return true;
     } catch (e) {
       transaction.rollback();
+      return false;
     }
   });
-  return true;
 };
 
 export {
