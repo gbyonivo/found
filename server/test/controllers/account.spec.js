@@ -3,7 +3,7 @@ import * as accountService from '../../src/services/accountService';
 import * as accountController from '../../src/controllers/account';
 
 jest.mock('jsonwebtoken');
-jest.mock('../../src/controllers/accountService');
+jest.mock('../../src/services/accountService');
 
 describe('Account - controller', () => {
   let res;

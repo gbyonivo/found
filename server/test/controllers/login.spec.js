@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import * as accountService from '../../src/controllers/accountService';
+import * as accountService from '../../src/services/accountService';
 import * as loginController from '../../src/controllers/login';
 
 jest.mock('jsonwebtoken');
-jest.mock('../../src/controllers/accountService');
+jest.mock('../../src/services/accountService');
 
 describe('Login - controller', () => {
   let res;
