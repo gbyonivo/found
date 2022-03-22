@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { Account } from '../db/connect.js';
-import { accountAttributes, accountSchema } from '../helpers/account.js';
-import InputError from '../helpers/InputError.js';
-import { comparePassword, hashPassword } from '../helpers/passwordHelper.js';
+import { Account } from '../db/connect';
+import { accountAttributes, accountSchema } from '../helpers/account';
+import InputError from '../helpers/InputError';
+import { comparePassword, hashPassword } from '../helpers/passwordHelper';
 
 const createAccount = async (account) => {
   const { value, error } = accountSchema.validate(account);

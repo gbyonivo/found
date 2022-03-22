@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
-import { getAccountByEmailAndPassword } from './accountService.js';
+import { getAccountByEmailAndPassword } from '../services/accountService';
 
 const login = async ({ body: { email, password } }, res) => {
   const account = await getAccountByEmailAndPassword({ email, password });
   if (account) {
     const token = jwt.sign({ email, id: account.id }, process.env.SECRET);
-    res.send(token);
+    res.status(200).send(token);
   } else {
     res.status(401).send();
   }

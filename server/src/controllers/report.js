@@ -1,5 +1,5 @@
-import { requestAsyncWrapper } from '../helpers/common.js';
-import * as reportService from './reportService.js';
+import { requestAsyncWrapper } from '../helpers/common';
+import * as reportService from '../services/reportService';
 
 const createReport = async ({ body, signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
@@ -10,8 +10,8 @@ const createReport = async ({ body, signedInAccount }, res) => {
 
 const getReports = async (req, res) => {
   requestAsyncWrapper(async () => {
-    const report = await reportService.getReports(req.params);
-    res.status(200).send(report);
+    const reports = await reportService.getReports(req.params);
+    res.status(200).send(reports);
   }, res);
 };
 

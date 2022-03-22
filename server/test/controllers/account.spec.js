@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import * as accountService from '../../src/controllers/accountService';
+import * as accountService from '../../src/services/accountService';
 import * as accountController from '../../src/controllers/account';
 
 jest.mock('jsonwebtoken');

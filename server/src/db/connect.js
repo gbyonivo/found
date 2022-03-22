@@ -1,22 +1,11 @@
-import { Sequelize } from 'sequelize';
-import { claim } from '../models/claim';
-import { report } from '../models/report';
-import { account } from '../models/account';
+import connectAndDefineDB from './defineDB';
 
-const connection = new Sequelize('found', 'root', '', {
-  host: 'localhost',
-  port: '3306',
-  dialect: 'mysql',
-});
-
-const Claim = connection.define('claim', claim);
-const Report = connection.define('report', report);
-const Account = connection.define('account', account);
-
-Account.hasMany(Claim, { as: 'Claims', foreignKey: 'accountId' });
-Account.hasMany(Report, { as: 'Reports', foreignKey: 'accountId' });
-// Report.hasOne(Claim, { as: 'AcceptedClaim', foreignKey: 'claimId' });
-Report.hasMany(Claim, { as: 'Claims', foreignKey: 'reportId' });
+const {
+  Claim,
+  Report,
+  Account,
+  connection,
+} = connectAndDefineDB();
 
 export {
   connection,

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { requestAsyncWrapper } from '../helpers/common';
-import * as accountService from './accountService';
+import * as accountService from '../services/accountService';
 
 const createAccount = async ({ body }, res) => {
   requestAsyncWrapper(async () => {

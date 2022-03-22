@@ -1,5 +1,5 @@
 import { requestAsyncWrapper } from '../helpers/common.js';
-import * as claimService from './claimService.js';
+import * as claimService from '../services/claimService';
 
 const createClaim = async ({ body, signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
@@ -11,13 +11,13 @@ const createClaim = async ({ body, signedInAccount }, res) => {
 const answerClaim = async ({ body, signedInAccount, params }, res) => {
   requestAsyncWrapper(async () => {
     await claimService.answerClaim({ ...body, accountId: signedInAccount.id, reportId: params.id });
-    res.status(200).send({});
+    res.status(200).send();
   }, res);
 };
 
-const getClaimsMadeByAccount = async (req, res) => {
+const getClaimsMadeByAccount = async ({ signedInAccount }, res) => {
   requestAsyncWrapper(async () => {
-    const claim = await claimService.getClaimsMadeByAccount();
+    const claim = await claimService.getClaimsMadeByAccount(signedInAccount.id);
     res.status(200).send(claim);
   }, res);
 };
