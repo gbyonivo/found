@@ -1,7 +1,7 @@
-import * as claimService from '../../src/controllers/claimService';
+import * as claimService from '../../src/services/claimService';
 import * as claimController from '../../src/controllers/claim';
 
-jest.mock('../../src/controllers/claimService');
+jest.mock('../../src/services/claimService');
 
 describe('Claim - controller', () => {
   let res;

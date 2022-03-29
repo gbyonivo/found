@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { BiX, BiPencil } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
@@ -8,8 +8,8 @@ const className = 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-2 rou
 function EditableTextInput({
   defaultValue, save, clear, label, type, fixed, valueKey,
 }) {
-  const [disabled, setDisabled] = useState(true);
-  const [value, setValue] = useState(defaultValue);
+  const [disabled, setDisabled] = React.useState(true);
+  const [value, setValue] = React.useState(defaultValue);
   const onChange = ({ target }) => {
     setValue(target.value)
   };
@@ -29,7 +29,7 @@ function EditableTextInput({
   }, [save, value, valueKey]);
 
   return (
-    <div className="font-light">
+    <div className="font-light editable-text-input">
       {label && <div className="mb-4">{label}</div>}
       <div className="border border-purple-200 rounded p-4 flex">
         <input
@@ -42,14 +42,14 @@ function EditableTextInput({
         {!fixed && (
           disabled
             ? (
-              <button onClick={clickEdit} className={className} type="button">
+              <button onClick={clickEdit} className={`${className} editable-text-input__edit-btn`} type="button">
                 <BiPencil size="30" />
               </button>
             )
             : (
               <>
-                <button onClick={clickCancel} className={className} type="button"><BiX size="30" /></button>
-                <button onClick={clickSave} className={className} type="button"><TiTick size="30" /></button>
+                <button onClick={clickCancel} className={`${className} editable-text-input__cancel-btn`} type="button"><BiX size="30" /></button>
+                <button onClick={clickSave} className={`${className} editable-text-input__save-btn`} type="button"><TiTick size="30" /></button>
               </>
             )
         )}
@@ -64,12 +64,14 @@ EditableTextInput.defaultProps = {
   fixed: false,
   save: () => {},
   valueKey: '',
+  defaultValue: '',
+  label: '',
 };
 
 EditableTextInput.propTypes = {
   save: PropTypes.func,
-  defaultValue: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
+  label: PropTypes.string,
   type: PropTypes.string,
   clear: PropTypes.bool,
   fixed: PropTypes.bool,

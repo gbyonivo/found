@@ -1,7 +1,7 @@
-import * as reportService from '../../src/controllers/reportService';
+import * as reportService from '../../src/services/reportService';
 import * as reportController from '../../src/controllers/report';
 
-jest.mock('../../src/controllers/reportService');
+jest.mock('../../src/services/reportService');
 
 describe('Report - controller', () => {
   let res;
